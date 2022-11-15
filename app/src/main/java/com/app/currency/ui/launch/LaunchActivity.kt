@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.app.currency.R
 import com.app.currency.databinding.ActivityLaunchBinding
 import com.app.currency.ui.launch.view.SplashFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LaunchActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLaunchBinding

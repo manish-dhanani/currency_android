@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Currency</string>
+    <string name="err_no_network">It seems you haven\'t connected to active network.</string>
+    <string name="err_unknown">Something went wrong.</string>
 </resources>
