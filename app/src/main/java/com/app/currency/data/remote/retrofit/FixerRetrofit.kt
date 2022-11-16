@@ -27,4 +27,10 @@ interface FixerRetrofit {
         @Query("end_date") endDate: String
     ): JsonElement
 
+    @GET("latest")
+    suspend fun getPopularConversions(
+        @Query("base") base: String,
+        @Query("symbols") symbols: String,
+    ): JsonElement
+
 }

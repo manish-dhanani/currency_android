@@ -23,9 +23,6 @@ data class Result<out T>(
         fun <T> error(message: String?): Result<T> =
             Result(Status.ERROR, null, message)
 
-        fun <T> error(message: String?, statusCode: Int) =
-            Result(Status.ERROR, null, message).apply { this.statusCode = statusCode }
-
         fun <T> loading(data: T? = null): Result<T> = Result(Status.LOADING, data, null)
     }
 

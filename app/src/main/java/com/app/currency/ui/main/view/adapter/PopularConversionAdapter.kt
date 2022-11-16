@@ -4,23 +4,23 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.currency.data.local.ConversionData
-import com.app.currency.databinding.ListItemHistoryDataBinding
+import com.app.currency.databinding.ListItemPopularConversionBinding
 
-class HistoryDataAdapter(private val dataList: List<ConversionData>) :
-    RecyclerView.Adapter<HistoryDataAdapter.ViewHolder>() {
+class PopularConversionAdapter(private val dataList: List<ConversionData>) :
+    RecyclerView.Adapter<PopularConversionAdapter.ViewHolder>() {
 
-    class ViewHolder(val dataBinding: ListItemHistoryDataBinding) :
+    class ViewHolder(val dataBinding: ListItemPopularConversionBinding) :
         RecyclerView.ViewHolder(dataBinding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ListItemHistoryDataBinding.inflate(inflater, parent, false)
+        val binding = ListItemPopularConversionBinding.inflate(inflater, parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val historyData = dataList[position]
-        holder.dataBinding.historyData = historyData
+        val conversionData = dataList[position]
+        holder.dataBinding.conversionData = conversionData
     }
 
     override fun getItemCount() = dataList.size

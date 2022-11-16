@@ -1,9 +1,10 @@
 package com.app.currency.data.repo
 
+import com.app.currency.data.local.ConversionData
 import com.app.currency.data.local.ConvertResult
-import com.app.currency.data.local.HistoryData
 import com.app.currency.data.remote.retrofit.FixerRetrofit
 import com.app.currency.data.util.Result
+import com.app.currency.util.Constants
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
@@ -13,6 +14,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import retrofit2.HttpException
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class FixerRepository @Inject constructor(private val fixerRetrofit: FixerRetrofit) {
@@ -119,7 +122,7 @@ class FixerRepository @Inject constructor(private val fixerRetrofit: FixerRetrof
 
     suspend fun getHistoricalData(
         base: String, symbols: String, startDate: String, endDate: String
-    ): Flow<Result<List<HistoryData>>> {
+    ): Flow<Result<List<ConversionData>>> {
         return flow {
             emit(Result.loading())
 
@@ -140,13 +143,91 @@ class FixerRepository @Inject constructor(private val fixerRetrofit: FixerRetrof
                                         // Prepare historical data for single target only.
                                         val target: String = symbols.split(",")[0]
 
-                                        val dataList: ArrayList<HistoryData> = arrayListOf()
+                                        val dataList: ArrayList<ConversionData> = arrayListOf()
                                         dataList.apply {
                                             ratesMap.forEach {
                                                 add(
-                                                    HistoryData(
+                                                    ConversionData(
                                                         base, target, date = it.key,
                                                         rate = it.value.asJsonObject[target].asDouble
+                                                    )
+                                                )
+                                            }
+                                        }
+
+                                        // Emit Result success with dataList.
+                                        emit(Result.success(dataList))
+                                    }
+                                    else -> {
+                                        emit(Result.error(null))
+                                    }
+                                }
+                            }
+                            response.asJsonObject.has("error") &&
+                                    !response.asJsonObject["error"].isJsonNull -> {
+                                emit(Result.error(getErrorMessage(response.asJsonObject["error"].asJsonObject)))
+                            }
+                            else -> {
+                                emit(Result.error(null))
+                            }
+                        }
+                    } else {
+                        emit(Result.error(null))
+                    }
+                }
+
+            } catch (httpError: HttpException) {
+                emit(Result.error(getHttpErrorMessage(httpError)))
+
+            } catch (e: Exception) {
+                emit(Result.error(e.message))
+            }
+
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getPopularConversions(
+        base: String,
+        symbols: String
+    ): Flow<Result<List<ConversionData>>> {
+        return flow {
+            emit(Result.loading())
+
+            try {
+                fixerRetrofit.getPopularConversions(base, symbols).let { response ->
+                    if (response.isJsonObject && response.asJsonObject.has("success")) {
+                        val success = response.asJsonObject["success"].asBoolean
+
+                        when {
+                            success -> {
+                                when {
+                                    response.asJsonObject.has("rates") &&
+                                            response.asJsonObject["rates"].isJsonObject -> {
+
+                                        val date: String = when {
+                                            response.asJsonObject.has("date") -> {
+                                                response.asJsonObject["date"].asString
+                                            }
+                                            else -> {
+                                                val formatter = SimpleDateFormat(
+                                                    Constants.API_DATE_FORMAT, Locale.ENGLISH
+                                                )
+
+                                                val calendar = Calendar.getInstance()
+                                                formatter.format(calendar.time)
+                                            }
+                                        }
+
+                                        val ratesMap: MutableMap<String, JsonElement> =
+                                            response.asJsonObject["rates"].asJsonObject.asMap()
+
+                                        val dataList: ArrayList<ConversionData> = arrayListOf()
+                                        dataList.apply {
+                                            ratesMap.forEach {
+                                                add(
+                                                    ConversionData(
+                                                        base, target = it.key, date,
+                                                        rate = it.value.asDouble
                                                     )
                                                 )
                                             }

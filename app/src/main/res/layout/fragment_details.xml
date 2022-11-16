@@ -6,89 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.view.DetailsFragment">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_history_data_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/app_margin_large"
-        android:textColor="@color/black"
-        android:textSize="@dimen/title_text_size"
-        app:fontFamily="@font/roboto_medium"
-        app:layout_constraintEnd_toEndOf="parent"
+    <include
+        android:id="@+id/layout_history_data"
+        layout="@layout/layout_history_data"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="USD/INR Historical Data" />
+        app:layout_constraintWidth_percent="0.55" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_history_data_labels"
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:layout_marginTop="@dimen/app_margin_small"
-        android:paddingHorizontal="@dimen/app_margin_medium"
-        app:layout_constraintTop_toBottomOf="@+id/tv_history_data_title">
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="2dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/history_date"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/desc_text_size"
-                app:fontFamily="@font/roboto_regular" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/history_rate"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/desc_text_size"
-                app:fontFamily="@font/roboto_regular" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#DDDDDD"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_history_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/layout_history_data_labels"
-        tools:itemCount="3"
-        tools:listitem="@layout/list_item_history_data" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/history_data_content_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="layout_history_data_labels,rv_history_data"
-        tools:visibility="visible" />
-
-    <androidx.core.widget.ContentLoadingProgressBar
-        android:id="@+id/history_data_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <include
+        android:id="@+id/layout_popular_conversions"
+        layout="@layout/layout_popular_conversions"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+        app:layout_constraintWidth_percent="0.45" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

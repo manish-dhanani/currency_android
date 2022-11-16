@@ -21,4 +21,13 @@ internal class ConstantsTest {
         Assert.assertEquals("MMM dd, yyyy", Constants.DISPLAY_DATE_FORMAT)
     }
 
+    @Test
+    fun `confirm popular currencies with order`() {
+        Assert.assertArrayEquals(
+            arrayOf(
+                "USD", "EUR", "GBP", "INR", "AUD", "CAD", "JPY", "CHF", "CNY", "ZAR", "NZD", "SGD"
+            ), Constants.popularCurrencies
+        )
+    }
+
 }
