@@ -10,4 +10,9 @@ internal class ConstantsTest {
         Assert.assertEquals("https://api.apilayer.com/fixer/", Constants.FIXER_BASE_URL)
     }
 
+    @Test
+    fun `confirm number format`() {
+        Assert.assertEquals("##.#####", Constants.NUMBER_FORMAT)
+    }
+
 }
