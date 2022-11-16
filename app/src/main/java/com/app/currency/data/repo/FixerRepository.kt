@@ -38,7 +38,7 @@ class FixerRepository @Inject constructor(private val fixerRetrofit: FixerRetrof
                             }
                             response.asJsonObject.has("error") &&
                                     !response.asJsonObject["error"].isJsonNull -> {
-                                getErrorMessage(response.asJsonObject["error"].asJsonObject)
+                                emit(Result.error(getErrorMessage(response.asJsonObject["error"].asJsonObject)))
                             }
                             else -> {
                                 emit(Result.error(null))

@@ -3,7 +3,7 @@ package com.app.currency.util
 import org.junit.Assert
 import org.junit.Test
 
-class ConstantsTest {
+internal class ConstantsTest {
 
     @Test
     fun `confirm fixer base url`() {

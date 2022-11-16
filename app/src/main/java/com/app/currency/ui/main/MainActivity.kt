@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.app.currency.R
 import com.app.currency.databinding.ActivityMainBinding
 import com.app.currency.ui.main.view.MainFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
