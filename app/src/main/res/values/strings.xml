@@ -6,7 +6,10 @@
     <string name="err_no_currency">Unable to fetch currencies. Please try later.</string>
 
     <string name="details">Details</string>
-    <string name="title_history_data">%1$s/%2$s Historical Data</string>
+    <string name="title_history_data">Historical Data\n%1$s/%2$s</string>
     <string name="history_date">Date</string>
     <string name="history_rate">Rate</string>
+    <string name="title_popular_conversions">Popular Conversions\nfrom %s</string>
+    <string name="popular_currency">Currency</string>
+    <string name="popular_rate">Rate</string>
 </resources>

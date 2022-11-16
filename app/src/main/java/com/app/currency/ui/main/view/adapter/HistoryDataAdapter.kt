@@ -3,10 +3,10 @@ package com.app.currency.ui.main.view.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.app.currency.data.local.HistoryData
+import com.app.currency.data.local.ConversionData
 import com.app.currency.databinding.ListItemHistoryDataBinding
 
-class HistoryDataAdapter(private val dataList: List<HistoryData>) :
+class HistoryDataAdapter(private val dataList: List<ConversionData>) :
     RecyclerView.Adapter<HistoryDataAdapter.ViewHolder>() {
 
     class ViewHolder(val dataBinding: ListItemHistoryDataBinding) :

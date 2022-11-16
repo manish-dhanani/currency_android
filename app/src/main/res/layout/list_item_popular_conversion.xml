@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="historyData"
+            name="conversionData"
             type="com.app.currency.data.local.ConversionData" />
 
     </data>
@@ -23,15 +23,15 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_date"
+                android:id="@+id/tv_code"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text="@{conversionData.target}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/desc_text_size"
-                app:dateString="@{historyData.date}"
                 app:fontFamily="@font/roboto_regular"
-                tools:text="Nov 16, 2022" />
+                tools:text="EUR" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_rate"
@@ -40,8 +40,8 @@
                 android:textColor="@color/accent"
                 android:textSize="@dimen/desc_text_size"
                 app:fontFamily="@font/roboto_medium"
-                app:rate="@{historyData.rate}"
-                tools:text="81.302" />
+                app:rate="@{conversionData.rate}"
+                tools:text="0.96286" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

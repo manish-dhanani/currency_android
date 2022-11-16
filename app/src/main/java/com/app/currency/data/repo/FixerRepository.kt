@@ -1,7 +1,7 @@
 package com.app.currency.data.repo
 
 import com.app.currency.data.local.ConvertResult
-import com.app.currency.data.local.HistoryData
+import com.app.currency.data.local.ConversionData
 import com.app.currency.data.remote.retrofit.FixerRetrofit
 import com.app.currency.data.util.Result
 import com.google.gson.Gson
@@ -119,7 +119,7 @@ class FixerRepository @Inject constructor(private val fixerRetrofit: FixerRetrof
 
     suspend fun getHistoricalData(
         base: String, symbols: String, startDate: String, endDate: String
-    ): Flow<Result<List<HistoryData>>> {
+    ): Flow<Result<List<ConversionData>>> {
         return flow {
             emit(Result.loading())
 
@@ -140,11 +140,11 @@ class FixerRepository @Inject constructor(private val fixerRetrofit: FixerRetrof
                                         // Prepare historical data for single target only.
                                         val target: String = symbols.split(",")[0]
 
-                                        val dataList: ArrayList<HistoryData> = arrayListOf()
+                                        val dataList: ArrayList<ConversionData> = arrayListOf()
                                         dataList.apply {
                                             ratesMap.forEach {
                                                 add(
-                                                    HistoryData(
+                                                    ConversionData(
                                                         base, target, date = it.key,
                                                         rate = it.value.asJsonObject[target].asDouble
                                                     )
