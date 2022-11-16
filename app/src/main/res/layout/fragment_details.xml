@@ -20,7 +20,7 @@
         tools:text="USD/INR Historical Data" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_labels"
+        android:id="@+id/layout_history_data_labels"
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:layout_marginTop="@dimen/app_margin_small"
@@ -67,8 +67,28 @@
         android:layout_height="wrap_content"
         android:scrollbars="none"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/layout_labels"
+        app:layout_constraintTop_toBottomOf="@+id/layout_history_data_labels"
         tools:itemCount="3"
         tools:listitem="@layout/list_item_history_data" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/history_data_content_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="layout_history_data_labels,rv_history_data"
+        tools:visibility="visible" />
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/history_data_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -195,7 +195,14 @@ class MainFragment : Fragment() {
             tvToDropdown?.setText(fromCode, false)
         }
 
-        binding.btnDetails.setOnClickListener { navigateToDetails() }
+        binding.btnDetails.setOnClickListener {
+            activity?.let { activity ->
+                when {
+                    networkConnection.isActive() -> navigateToDetails()
+                    else -> activity.showError(binding.root, getString(R.string.err_no_network))
+                }
+            }
+        }
     }
 
     private fun init(symbolsMap: Map<String, JsonElement>) {
