@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Currency</string>
+
     <string name="err_no_network">It seems you haven\'t connected to active network.</string>
     <string name="err_unknown">Something went wrong.</string>
     <string name="err_no_currency">Unable to fetch currencies. Please try later.</string>
+
+    <string name="details">Details</string>
+    <string name="title_history_data">%1$s/%2$s Historical Data</string>
+    <string name="history_date">Date</string>
+    <string name="history_rate">Rate</string>
 </resources>

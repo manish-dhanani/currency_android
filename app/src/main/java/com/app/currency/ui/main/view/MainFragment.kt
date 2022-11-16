@@ -9,6 +9,7 @@ import android.widget.EditText
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.app.currency.R
 import com.app.currency.data.local.ConvertResult
 import com.app.currency.data.local.Symbol
@@ -193,6 +194,8 @@ class MainFragment : Fragment() {
             tvFromDropdown?.setText(toCode, false)
             tvToDropdown?.setText(fromCode, false)
         }
+
+        binding.btnDetails.setOnClickListener { navigateToDetails() }
     }
 
     private fun init(symbolsMap: Map<String, JsonElement>) {
@@ -272,6 +275,16 @@ class MainFragment : Fragment() {
         binding.apply {
             fromDropdown.isEnabled = true
             toDropdown.isEnabled = true
+        }
+    }
+
+    private fun navigateToDetails() {
+        if (tvFromDropdown?.text?.isNotEmpty() == true && tvToDropdown?.text?.isNotEmpty() == true) {
+            val directions = MainFragmentDirections.actionDetails(
+                base = tvFromDropdown?.text.toString(),
+                target = tvToDropdown?.text.toString()
+            )
+            findNavController().navigate(directions)
         }
     }
 
