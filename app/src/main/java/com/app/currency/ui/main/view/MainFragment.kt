@@ -30,10 +30,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = MainFragment()
-    }
-
     private var _binding: FragmentMainBinding? = null
 
     // This property is only valid between onCreateView and onDestroyView.
