@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.currency.data.local.ConvertResult
+import com.app.currency.data.local.HistoryData
 import com.app.currency.data.repo.FixerRepository
 import com.app.currency.data.util.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,10 +19,21 @@ class MainViewModel @Inject constructor(private val fixerRepository: FixerReposi
     private val _convertResult = MutableLiveData<Result<ConvertResult>>()
     val convertResult get() = _convertResult
 
+    private val _historicalDataResult = MutableLiveData<Result<List<HistoryData>>>()
+    val historicalDataResult get() = _historicalDataResult
+
     fun convert(from: String, to: String, amount: Double) {
         viewModelScope.launch {
             fixerRepository.convert(from, to, amount).collectLatest {
                 _convertResult.postValue(it)
+            }
+        }
+    }
+
+    fun getHistoricalData(base: String, symbols: String, startDate: String, endDate: String) {
+        viewModelScope.launch {
+            fixerRepository.getHistoricalData(base, symbols, startDate, endDate).collectLatest {
+                _historicalDataResult.postValue(it)
             }
         }
     }
