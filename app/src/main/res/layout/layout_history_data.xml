@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_title"
+        android:id="@+id/tv_history_data_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/app_margin_large"
@@ -20,12 +20,12 @@
         tools:text="Historical Data\nUSD/INR" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_labels"
+        android:id="@+id/layout_history_data_labels"
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:layout_marginHorizontal="@dimen/app_margin_small"
         android:layout_marginTop="@dimen/app_margin_small"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title">
+        app:layout_constraintTop_toBottomOf="@+id/tv_history_data_title">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -67,22 +67,22 @@
         android:layout_height="wrap_content"
         android:scrollbars="none"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="@id/layout_labels"
-        app:layout_constraintStart_toStartOf="@id/layout_labels"
-        app:layout_constraintTop_toBottomOf="@+id/layout_labels"
+        app:layout_constraintEnd_toEndOf="@id/layout_history_data_labels"
+        app:layout_constraintStart_toStartOf="@id/layout_history_data_labels"
+        app:layout_constraintTop_toBottomOf="@+id/layout_history_data_labels"
         tools:itemCount="3"
         tools:listitem="@layout/list_item_history_data" />
 
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/content_group"
+        android:id="@+id/history_data_content_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="layout_labels,rv_history_data"
+        app:constraint_referenced_ids="layout_history_data_labels,rv_history_data"
         tools:visibility="visible" />
 
     <androidx.core.widget.ContentLoadingProgressBar
-        android:id="@+id/progress"
+        android:id="@+id/history_data_progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="36dp"
         android:layout_height="36dp"

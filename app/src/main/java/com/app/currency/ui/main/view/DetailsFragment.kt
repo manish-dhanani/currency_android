@@ -30,8 +30,8 @@ class DetailsFragment : Fragment() {
 
     lateinit var viewModel: MainViewModel
 
-    lateinit var base: String
-    lateinit var target: String
+    private lateinit var base: String
+    private lateinit var target: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -131,7 +131,7 @@ class DetailsFragment : Fragment() {
     }
 
     private fun initHistoricalData() {
-        binding.layoutHistoryData.tvTitle.text =
+        binding.layoutHistoryData.tvHistoryDataTitle.text =
             getString(R.string.title_history_data, base, target)
 
         val formatter = SimpleDateFormat(Constants.API_DATE_FORMAT, Locale.ENGLISH)
@@ -146,7 +146,7 @@ class DetailsFragment : Fragment() {
     }
 
     private fun initPopularConversions() {
-        binding.layoutPopularConversions.tvTitle.text =
+        binding.layoutPopularConversions.tvPopularConversionsTitle.text =
             getString(R.string.title_popular_conversions, base)
 
         // Array consists of 10 popular currencies other than base and target.
@@ -158,19 +158,23 @@ class DetailsFragment : Fragment() {
     }
 
     private fun showHistoryDataContent(show: Boolean) {
-        activity?.let { binding.layoutHistoryData.contentGroup.isVisible = show }
+        activity?.let { binding.layoutHistoryData.historyDataContentGroup.isVisible = show }
     }
 
     private fun showHistoryDataProgress(show: Boolean) {
-        activity.let { binding.layoutHistoryData.progress.isVisible = show }
+        activity.let { binding.layoutHistoryData.historyDataProgress.isVisible = show }
     }
 
     private fun showPopularConversionsContent(show: Boolean) {
-        activity?.let { binding.layoutPopularConversions.contentGroup.isVisible = show }
+        activity?.let {
+            binding.layoutPopularConversions.popularConversionsContentGroup.isVisible = show
+        }
     }
 
     private fun showPopularConversionsProgress(show: Boolean) {
-        activity.let { binding.layoutPopularConversions.progress.isVisible = show }
+        activity.let {
+            binding.layoutPopularConversions.popularConversionsProgress.isVisible = show
+        }
     }
 
 }

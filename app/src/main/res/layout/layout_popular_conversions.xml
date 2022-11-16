@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_title"
+            android:id="@+id/tv_popular_conversions_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_margin_large"
@@ -25,12 +25,12 @@
             tools:text="Popular Conversions\nfrom USD" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_labels"
+            android:id="@+id/layout_popular_conversions_labels"
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:layout_marginHorizontal="@dimen/app_margin_small"
             android:layout_marginTop="@dimen/app_margin_small"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title">
+            app:layout_constraintTop_toBottomOf="@+id/tv_popular_conversions_title">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -73,22 +73,22 @@
             android:nestedScrollingEnabled="true"
             android:scrollbars="none"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="@id/layout_labels"
-            app:layout_constraintStart_toStartOf="@id/layout_labels"
-            app:layout_constraintTop_toBottomOf="@+id/layout_labels"
+            app:layout_constraintEnd_toEndOf="@id/layout_popular_conversions_labels"
+            app:layout_constraintStart_toStartOf="@id/layout_popular_conversions_labels"
+            app:layout_constraintTop_toBottomOf="@+id/layout_popular_conversions_labels"
             tools:itemCount="10"
             tools:listitem="@layout/list_item_popular_conversion" />
 
         <androidx.constraintlayout.widget.Group
-            android:id="@+id/content_group"
+            android:id="@+id/popular_conversions_content_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:constraint_referenced_ids="layout_labels,rv_popular_conversions"
+            app:constraint_referenced_ids="layout_popular_conversions_labels,rv_popular_conversions"
             tools:visibility="visible" />
 
         <androidx.core.widget.ContentLoadingProgressBar
-            android:id="@+id/progress"
+            android:id="@+id/popular_conversions_progress"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="36dp"
             android:layout_height="36dp"
