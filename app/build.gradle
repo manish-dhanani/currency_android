@@ -3,6 +3,9 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+
+    // Gradle plugin for passing arguments using Navigation architecture component.
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -67,6 +70,10 @@ dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.5.4'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+
+    // Navigation Component
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
 
     // Dependency injection with Hilt.
     implementation 'com.google.dagger:hilt-android:2.44'

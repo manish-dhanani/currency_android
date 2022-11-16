@@ -15,4 +15,10 @@ internal class ConstantsTest {
         Assert.assertEquals("##.#####", Constants.NUMBER_FORMAT)
     }
 
+    @Test
+    fun `confirm date formats`() {
+        Assert.assertEquals("yyyy-MM-dd", Constants.API_DATE_FORMAT)
+        Assert.assertEquals("MMM dd, yyyy", Constants.DISPLAY_DATE_FORMAT)
+    }
+
 }

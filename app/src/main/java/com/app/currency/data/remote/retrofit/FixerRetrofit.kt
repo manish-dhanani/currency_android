@@ -19,4 +19,12 @@ interface FixerRetrofit {
         @Query("amount") amount: Double
     ): JsonElement
 
+    @GET("timeseries")
+    suspend fun getHistoricalData(
+        @Query("base") base: String,
+        @Query("symbols") symbols: String,
+        @Query("start_date") startDate: String,
+        @Query("end_date") endDate: String
+    ): JsonElement
+
 }
