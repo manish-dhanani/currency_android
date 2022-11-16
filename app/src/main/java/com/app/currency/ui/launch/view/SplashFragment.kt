@@ -7,10 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.app.currency.data.util.Result
 import com.app.currency.databinding.FragmentSplashBinding
 import com.app.currency.ui.launch.viewmodel.SplashViewModel
 import com.app.currency.ui.main.MainActivity
+import com.app.currency.util.DataState
+import com.app.currency.util.NetworkConnection
+import com.app.currency.util.PrefManager
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SplashFragment : Fragment() {
 
     companion object {
@@ -21,6 +28,12 @@ class SplashFragment : Fragment() {
 
     // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
+
+    @Inject
+    lateinit var networkConnection: NetworkConnection
+
+    @Inject
+    lateinit var prefManager: PrefManager
 
     private val viewModel by viewModels<SplashViewModel>()
 
@@ -46,16 +59,38 @@ class SplashFragment : Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.isSplashPlayFinished.observe(viewLifecycleOwner) {
-            if (it) {
-                startMainActivity()
+        viewModel.symbolsResult.observe(viewLifecycleOwner) { result ->
+            when (result.status) {
+                Result.Status.SUCCESS -> {
+                    viewModel.symbolsDataState = DataState.FETCHED
+
+                    result.data?.let {
+                        // Save symbols json object as string in prefManager.
+                        prefManager.setSymbols(it)
+                    }
+                }
+                Result.Status.ERROR -> {
+                    viewModel.symbolsDataState = DataState.FAILED
+                }
+                Result.Status.LOADING -> {
+                    viewModel.symbolsDataState = DataState.FETCHING
+                }
             }
+        }
+
+        viewModel.isSplashPlayFinished.observe(viewLifecycleOwner) {
+            if (it) startMainActivity()
         }
     }
 
     private fun init() {
-        // Play splash animation
-        viewModel.playSplash()
+        activity?.let {
+            // Get symbols.
+            if (networkConnection.isActive()) viewModel.getSymbols()
+
+            // Play splash animation.
+            viewModel.playSplash(SplashViewModel.SPLASH_PLAY_DURATION)
+        }
     }
 
     private fun startMainActivity() {
