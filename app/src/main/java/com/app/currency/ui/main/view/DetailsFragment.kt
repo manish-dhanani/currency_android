@@ -1,6 +1,7 @@
 package com.app.currency.ui.main.view
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.app.currency.R
 import com.app.currency.data.util.Result
 import com.app.currency.databinding.FragmentDetailsBinding
 import com.app.currency.ui.main.view.adapter.HistoryDataAdapter
+import com.app.currency.ui.main.view.adapter.PopularConversionAdapter
 import com.app.currency.ui.main.viewmodel.MainViewModel
 import com.app.currency.util.Constants
 import com.app.currency.util.Extensions.showError
@@ -53,7 +55,9 @@ class DetailsFragment : Fragment() {
 
         setObservers()
 
-        init()
+        initHistoricalData()
+
+        initPopularConversions()
     }
 
     override fun onDestroyView() {
@@ -77,7 +81,7 @@ class DetailsFragment : Fragment() {
 
                         result.data?.let { dataList ->
                             // Sort historical data in descending order by date.
-                            binding.rvHistoryData.adapter =
+                            binding.layoutHistoryData.rvHistoryData.adapter =
                                 HistoryDataAdapter(dataList.sortedByDescending { it.date })
                         }
                     }
@@ -96,10 +100,39 @@ class DetailsFragment : Fragment() {
                 }
             }
         }
+
+        viewModel.popularConversionsResult.observe(viewLifecycleOwner) { result ->
+            activity?.let { activity ->
+                when (result.status) {
+                    Result.Status.SUCCESS -> {
+                        showPopularConversionsContent(true)
+                        showPopularConversionsProgress(false)
+
+                        result.data?.let { dataList ->
+                            binding.layoutPopularConversions.rvPopularConversions.adapter =
+                                PopularConversionAdapter(dataList)
+                        }
+                    }
+                    Result.Status.ERROR -> {
+                        showPopularConversionsContent(false)
+                        showPopularConversionsProgress(false)
+
+                        activity.showError(
+                            binding.root, result.message ?: getString(R.string.err_unknown)
+                        )
+                    }
+                    Result.Status.LOADING -> {
+                        showPopularConversionsContent(false)
+                        showPopularConversionsProgress(true)
+                    }
+                }
+            }
+        }
     }
 
-    private fun init() {
-        binding.tvHistoryDataTitle.text = getString(R.string.title_history_data, base, target)
+    private fun initHistoricalData() {
+        binding.layoutHistoryData.tvTitle.text =
+            getString(R.string.title_history_data, base, target)
 
         val formatter = SimpleDateFormat(Constants.API_DATE_FORMAT, Locale.ENGLISH)
 
@@ -112,12 +145,32 @@ class DetailsFragment : Fragment() {
         viewModel.getHistoricalData(base, target, startDate, endDate)
     }
 
+    private fun initPopularConversions() {
+        binding.layoutPopularConversions.tvTitle.text =
+            getString(R.string.title_popular_conversions, base)
+
+        // Array consists of 10 popular currencies other than base and target.
+        val symbolsArray = Constants.popularCurrencies.filterNot { it == base || it == target }
+            .subList(0, 10)
+        val symbols = TextUtils.join(",", symbolsArray)
+
+        viewModel.getPopularConversions(base, symbols)
+    }
+
     private fun showHistoryDataContent(show: Boolean) {
-        activity?.let { binding.historyDataContentGroup.isVisible = show }
+        activity?.let { binding.layoutHistoryData.contentGroup.isVisible = show }
     }
 
     private fun showHistoryDataProgress(show: Boolean) {
-        activity.let { binding.historyDataProgress.isVisible = show }
+        activity.let { binding.layoutHistoryData.progress.isVisible = show }
+    }
+
+    private fun showPopularConversionsContent(show: Boolean) {
+        activity?.let { binding.layoutPopularConversions.contentGroup.isVisible = show }
+    }
+
+    private fun showPopularConversionsProgress(show: Boolean) {
+        activity.let { binding.layoutPopularConversions.progress.isVisible = show }
     }
 
 }
